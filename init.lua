@@ -102,3 +102,24 @@ minetest.register_chatcommand("removespawn", {
         return false, "No spawnpoint found!"
     end
 })
+
+-- list all spawnpoints
+minetest.register_chatcommand("listspawns", {
+    privs = {server = true},  -- admin-only
+    description = "List all spawnpoints with coordinates",
+    func = function(name)
+        if #spawns == 0 then
+            return false, "No spawnpoints set!"
+        end
+
+        local msg = "Spawnpoints:\n"
+        for i, pos in ipairs(spawns) do
+            msg = msg .. i .. ": (" ..
+                math.floor(pos.x) .. ", " ..
+                math.floor(pos.y) .. ", " ..
+                math.floor(pos.z) .. ")\n"
+        end
+
+        return true, msg
+    end
+})
